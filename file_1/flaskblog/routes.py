@@ -16,6 +16,7 @@ def home():
 def barcode():
     form = BarcodeForm()
     if form.validate_on_submit():
+        
         flash(f'barcode ok', 'success')
         return redirect(url_for('home'))
     return render_template('barcode.html', title='barcode', form=form)
