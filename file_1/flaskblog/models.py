@@ -27,7 +27,7 @@ class Product(db.Model):
     warehouse_id = db.Column(db.Integer, nullable =False )
 
     def __repr__(self):
-        return f"Product('{self.barcode}', '{self.name}', '{self.kind}', '{self.quantity}', '{self.image}', '{self.warehouse}')"
+        return f"Product('{self.barcode}', '{self.name}', '{self.kind}', '{self.quantity}', '{self.image}', '{self.warehouse_id}')"
 
 class Warehouse(db.Model):
     house_id = db.Column(db.Integer, nullable=False, unique=True, primary_key=True)
