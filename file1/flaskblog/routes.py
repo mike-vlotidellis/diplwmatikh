@@ -20,6 +20,10 @@ def barcode():
         return redirect(url_for('home'))
     return render_template('barcode.html', title='barcode', form=form)
 
+@app.route("/insert_one", methods=['GET', 'POST'])
+def insert_one():
+
+    return render_template('insert_one.html')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
