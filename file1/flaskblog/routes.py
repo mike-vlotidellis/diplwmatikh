@@ -1,6 +1,6 @@
 from flask import  render_template, url_for, flash, redirect
 from flaskblog import app, db, bcrypt
-from flaskblog.forms import RegistrationForm, LoginForm , BarcodeForm
+from flaskblog.forms import RegistrationForm, LoginForm , BarcodeForm, Import_oneForm
 from flaskblog.models import User , Product , Warehouse
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -20,10 +20,14 @@ def barcode():
         return redirect(url_for('home'))
     return render_template('barcode.html', title='barcode', form=form)
 
-@app.route("/insert_one", methods=['GET', 'POST'])
-def insert_one():
-
-    return render_template('insert_one.html')
+@app.route("/import_one", methods=['GET', 'POST'])
+def import_one():
+    form =  Import_oneForm()
+    if form.validate_on_submit():
+                product = Product(barcode =form.barcode.data ,name=form.name.data,kind=form.kind.data ,quantity=form.quantity.data ,warehouse_id=form.warehouse_id.data)
+                db.session.add(product)#ta kanw add sthn bash
+                db.session.commit()
+    return render_template('import_one.html', title='import_one', form=form)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField ,IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo ,ValidationError
 from flaskblog.models import User
 
@@ -16,7 +16,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Sign Up')
 
     def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first() # se periptwsh poy yparxei kataxwrish sthn bash me to idio username me ayto poy evale twra o xrhsths sthn bash tote h metavlith user tha parei timh an einai kenh tote paei na pei oti den yparxei to username sthn bash  
+        user = User.query.filter_by(username=username.data).first() # se periptwsh poy yparxei kataxwrish sthn bash me to idio username me ayto poy evale twra o xrhsths sthn bash tote h metavlith user tha parei timh an einai kenh tote paei na pei oti den yparxei to username sthn bash
         if user:
             raise ValidationError('username already taken1')
 
@@ -27,7 +27,7 @@ class RegistrationForm(FlaskForm):
         email = User.query.filter_by(email=email.data).first() # se periptwsh poy yparxei kataxwrish sthn bash me to idio email me ayto poy evale twra o xrhsths sthn bash tote h metavlith user tha parei timh an einai kenh tote paei na pei oti den yparxei to email sthn bash
 
         if email:
-            raise ValidationError('email already taken2')        
+            raise ValidationError('email already taken2')
 
 
 
@@ -39,7 +39,15 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
-class BarcodeForm(FlaskForm): 
-        barcode = StringField(' 16 digits barcode',
-                        validators=[DataRequired(), Length(min=15, max=16)])
+class BarcodeForm(FlaskForm):
+        barcode = IntegerField(' 16 digits barcode',
+                        validators=[DataRequired(), Length(min=16, max=16)])
         submit = SubmitField('submit')
+
+class Import_oneForm(FlaskForm):
+    barcode = StringField(' 16 digits barcode',validators=[DataRequired(), Length(min=16, max=16)])
+    name = StringField('Product name',validators=[DataRequired(),Length(max=20)])
+    kind = StringField('Kind',validators=[DataRequired(),Length(max=20)])
+    quantity = StringField ('quantity',validators = [DataRequired()])
+    warehouse_id = StringField ('warehouse_id',validators = [DataRequired()])
+    submit = SubmitField('import')
