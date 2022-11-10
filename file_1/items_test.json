@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "barcode": "2863298784844999",
+      "name": "digestive",
+      "kind": "biscuits",
+      "quantity":"2",
+      "image": "",
+      "warehouse_id": "3"
+    },
+    {
+      "barcode": "8247985890142765",
+      "name": "spaghetti no6 barilla",
+      "kind": "pasta",
+      "quantity":"6",
+      "image": "",
+      "warehouse_id": "3"
+    },
+    {
+      "barcode": "1654014753329427",
+      "name": "NOUNOU",
+      "kind": "MILK",
+      "quantity":"4",
+      "image": "",
+      "warehouse_id": "2"  
+    }, 
+    {
+      "barcode": "8671070647022426",
+      "name": "AGRINO",
+      "kind": "RISE",
+      "quantity":"8",
+      "image": "",
+      "warehouse_id": "2"  
+    },
+    {
+      "barcode": "8671970637022485",
+      "name": "ultrex",
+      "kind": "sampoo",
+      "quantity":"3",
+      "image": "",
+      "warehouse_id": "2"  
+    }
+  ]
+}

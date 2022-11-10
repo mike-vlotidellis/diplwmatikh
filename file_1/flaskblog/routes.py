@@ -1,8 +1,9 @@
-from flask import  render_template, url_for, flash, redirect
+from flask import  render_template, url_for, flash, redirect ,request
 from flaskblog import app, db, bcrypt
 from flaskblog.forms import RegistrationForm, LoginForm , BarcodeForm
 from flaskblog.models import User , Product , Warehouse
 from flask_login import login_user, current_user, logout_user, login_required
+import json
 
 
 
@@ -16,7 +17,7 @@ def home():
 def barcode():
     form = BarcodeForm()
     if form.validate_on_submit():
-        
+
         flash(f'barcode ok', 'success')
         return redirect(url_for('home'))
     return render_template('barcode.html', title='barcode', form=form)
@@ -62,3 +63,47 @@ def logout():
 @login_required
 def account():
    return render_template('account.html', title='Account')
+
+
+
+@app.route('/upload')
+def upload_file1():
+   return render_template('upload.html')
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_file():
+   if request.method == 'POST':
+      f = request.files['file']
+      f.save(f.filename)
+      with open(f.filename) as g:
+            data = json.load(g)
+            for item in data['items']:
+                item_for_load=Product (barcode=item['barcode'] ,name =item['name'],kind=item['kind'],quantity=item['quantity'],warehouse_id=item['warehouse_id']) 
+                db.session.add(item_for_load)
+                db.session.commit()
+      return 'file uploaded successfully'
+
+#@app.route("/test")
+# def test():
+
+#     print ("hello word")
+#     with open('states.json') as f:
+#         data = json.load(f)
+
+#         for state in data['states']: 
+#             print (state['name'])
+                
+#     return 'file uploaded successfully'
+
+
+
+
+
+    #with open('states.json') as f:
+   #        data = json.load(f)
+    #        fruits = ["apple", "banana", "cherry"]
+    #        for x in fruits:
+    #            print(x)
+    #        for state in data['states']:
+    #            print(state['name'])
+    #            return 'file uploaded successfully'
