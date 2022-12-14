@@ -41,5 +41,5 @@ class LoginForm(FlaskForm):
 
 class BarcodeForm(FlaskForm): 
         barcode = StringField(' 16 digits barcode',
-                        validators=[DataRequired(), Length(min=15, max=16)])
+                        validators=[DataRequired(), Length(min=16, max=16)])
         submit = SubmitField('submit')

@@ -1,0 +1,44 @@
+<head>
+    <title>GFG</title>
+</head>
+<body>
+  <form method="post" id="todo-form">
+        <input type="text" name="todo" id="todo">
+        <button type="submit">submit</button>
+    </form>
+    <div class="col-4 mx-auto">
+      results
+      <ul class="result_name"> </ul>
+      <ul class="result_kind"> </ul>      
+    </div>
+
+        <!--Jquery Cdn -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"></script>
+ 
+  <script type="text/javascript">
+    $(document).on('submit','#todo-form',function(e)
+                   {
+      console.log('hello');
+      e.preventDefault();
+      $.ajax({
+        type:'POST',
+        url:'/search',
+        data:{
+          todo:$("#todo").val()
+        },
+        success:function(response)
+        {
+          alert('saved');
+          $('.result_name').text(response.name)
+          $('.result_kind').text(response.kind)
+
+        }
+      })
+    });
+  </script>
+
+ <text>hello </text>
+</body>
+</html>

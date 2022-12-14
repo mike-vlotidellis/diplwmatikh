@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 class Product(db.Model):
-    barcode = db.Column(db.Integer, nullable=False, unique=True, primary_key=True)
+    barcode = db.Column(db.String(16), nullable=False, unique=True, primary_key=True)
     name = db.Column(db.String(20) ,nullable=False)
     kind = db.Column(db.String(20))
     quantity = db.Column(db.Integer, nullable=False)
@@ -36,3 +36,9 @@ class Warehouse(db.Model):
 
     def __repr__(self):
         return f"Warehouse('{self.house_id}', '{self.address}', '{self.house_name}')"
+
+class SearchInfo(db.Model):
+    barcode= db.Column(db.String(16), primary_key=True)
+   
+    def __repr__(self):
+        return f"'{self.barcode}'"

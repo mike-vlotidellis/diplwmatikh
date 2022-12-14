@@ -1,7 +1,7 @@
-from flask import  render_template, url_for, flash, redirect ,request
+from flask import  render_template, url_for, flash, redirect ,request ,jsonify
 from flaskblog import app, db, bcrypt
 from flaskblog.forms import RegistrationForm, LoginForm , BarcodeForm
-from flaskblog.models import User , Product , Warehouse
+from flaskblog.models import User , Product , Warehouse , SearchInfo
 from flask_login import login_user, current_user, logout_user, login_required
 import json
 
@@ -17,11 +17,23 @@ def home():
 def barcode():
     form = BarcodeForm()
     if form.validate_on_submit():
+       # search = SearchInfo(barcode=form.barcode.data)
+       # db.session.add(search)
+       # db.session.commit()
+        #searched = SearchInfo.query.first()
+        searched_barcode = Product.query.filter_by(barcode=form.barcode.data).all()
+        if searched_barcode == []:
+            flash('no items ', 'danger')
+            return redirect(url_for('barcode'))
+        return redirect(url_for('search_results'))
 
-        flash(f'barcode ok', 'success')
-        return redirect(url_for('home'))
     return render_template('barcode.html', title='barcode', form=form)
 
+@app.route("/search_results", methods=['GET', 'POST'])
+def search_results():
+   # searched_barcode = Product.query.filter_by(barcode=form.barcode.data).all()
+    
+    return render_template('search_results.html',title='Search Results')    
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -33,6 +45,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password) #vazw ta stoixia thn formas sthn metavliti user
         db.session.add(user)#ta kanw add sthn bash
         db.session.commit()
+
         flash(f'Account created !Please log in ', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
@@ -82,6 +95,16 @@ def upload_file():
                 db.session.add(item_for_load)
                 db.session.commit()
       return 'file uploaded successfully'
+
+@app.route('/search', methods = ['GET', 'POST'])
+def serch():
+    if request.method == "POST":
+        search = request.form.get("todo")
+        searched_barcode = Product.query.filter_by(barcode=search).first()
+        if searched_barcode : print(searched_barcode.name)
+        return jsonify ({'name':searched_barcode.name, 'kind':searched_barcode.kind})
+            
+    return render_template('search.html') 
 
 #@app.route("/test")
 # def test():
